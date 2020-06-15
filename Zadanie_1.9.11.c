@@ -75,18 +75,21 @@ void mat_print(MAT *mat){
 	printf("\n");
 }
 
-void riadky(float *a, float *b){ 
-	float t = *a; 
-    *a = *b; 
-    *b = t; 
+
+
+void riadky(float *a, float *b) { 
+   		float t = *a; 
+    	*a = *b; 
+    	*b = t; 
 } 
 
 float mat_permanent(MAT *mat){
 	int i,j,k;
 	float perm=0,sum=0;
-	float pole[mat->rows];
 	
-	k=mat->rows;
+	
+	if (mat->cols==mat->rows){
+	
 	if (mat->cols==1 && mat->rows==1)
 		perm=ELEM(mat,0,0);
 		
@@ -96,7 +99,7 @@ float mat_permanent(MAT *mat){
 		perm=ELEM(mat,0,0)*ELEM(mat,1,1)+ELEM(mat,0,1)*ELEM(mat,1,0);	
 	
 	else{
-		for (i=0;i<mat->rows;i++){
+		for (i=1;i<mat->rows;i++){
 	
 		for (j=0;j<mat->cols;j++)
 				riadky(&ELEM(mat,0,j),&ELEM(mat,2,j));	
@@ -116,7 +119,14 @@ float mat_permanent(MAT *mat){
 	}
 	}
 	sum+=perm;
+	printf ("Permanent matice je: %.3f",sum);
 	return sum;
+	}
+	
+	else{
+		printf ("Permanent matice viem urcit iba z matice nxn!\n");	
+		return 1;
+	}
 }
 
 
@@ -135,13 +145,7 @@ main(){
 	mat_print(m);
 	mat_random(m);
 	mat_print(m);
-	if (m->cols==m->rows){
-		a=mat_permanent(m);
-		printf ("Permanent matice je: %.3f",a);
-	}
-	else{
-		printf ("Permanent matice viem urcit iba z matice nxn!\n");		
-	}
-	//mat_destroy(m);
-	return 0;
+	a=mat_permanent(m);
+	return a;
+
 }

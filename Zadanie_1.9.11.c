@@ -78,17 +78,12 @@ void mat_print(MAT *mat){
 
 
 float mat_permanent(MAT *mat){
-	int i,j,r,index=0;
+	int i,j,r;
 	float perm=0;
-	
-	
-	if (mat->cols==mat->rows){
-	
+
 	if (mat->cols==1 && mat->rows==1)
 		perm=ELEM(mat,0,0);
-		
-	else{
-	
+	else
 	if (mat->cols==2 && mat->rows==2)
 		perm=ELEM(mat,0,0)*ELEM(mat,1,1)+ELEM(mat,0,1)*ELEM(mat,1,0);	
 	
@@ -97,35 +92,22 @@ float mat_permanent(MAT *mat){
 			MAT *mensiaMat;
 			mensiaMat= mat_create_with_type(mat->rows-1,mat->cols-1);
 			
-			index=0;
-			
-		for (i=1;i<mat->cols;i++){
+			for (i=0;i<mat->cols;i++){
 	
-		for (j=0;j<mat->rows;j++){
-			if (j!=r){
-				ELEM(mensiaMat,index,index)=ELEM(mat,i*mat->rows+j,i*mat->cols+j);
-				index++;
+			for (j=0;j<mat->rows;j++){
+				if (j!=r){
+					ELEM(mensiaMat,i,j)=ELEM(mat,i+1,j+1);
+				}
 			}
+			}
+		mat_print(mensiaMat);
+	
+	
+	perm+=ELEM(mat,0,r)*mat_permanent(mensiaMat);
+	mat_destroy(mensiaMat);
 		}
-					
-		
 	}
-
-	mat_print(mensiaMat);
-	
-	perm+=ELEM(mat,mat->rows,mat->cols)*mat_permanent(mensiaMat);
-	printf ("Permanent matice je: %.3f",perm);
 	return perm;
-	
-	
-	}
-	}
-	}
-	}
-	else{
-		printf ("Permanent matice viem urcit iba z matice nxn!\n");	
-		return 1;
-	}
 }
 
 
@@ -144,7 +126,15 @@ main(){
 	mat_print(m);
 	mat_random(m);
 	mat_print(m);
-	a=mat_permanent(m);
-	return a;
-
+	
+	
+	if (m->cols==m->rows){
+		printf ("Permanent matice je: %.3f",mat_permanent(m));
+		return 0;
+	}
+	
+	else{
+		printf ("Permanent matice viem urcit iba z matice nxn!\n"); 
+		return 1;
+	}
 }

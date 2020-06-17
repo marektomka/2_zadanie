@@ -12,20 +12,23 @@ typedef struct{
 
 MAT* mat_create_with_type(unsigned int rows, unsigned int cols){
 	MAT* m=(MAT*)malloc(sizeof(MAT)); 
-	if (m == NULL){
+	if (m == NULL)
 		return NULL;
-	}                               
+	
+	m->rows=rows;
+	m->cols=cols;	                             
 	m->elem=(float*)malloc(sizeof(float)*rows*cols);
 		
-	if (m->elem == NULL){
-		return NULL;
-	}           
+	if (m->elem == NULL)
+		return NULL;    
+		      
 	return m;
 }
 
 void mat_destroy(MAT *mat){
-	free(mat);
 	free(mat->elem);
+	free(mat);
+	
 }
 
 void mat_random(MAT *mat){
@@ -33,7 +36,7 @@ void mat_random(MAT *mat){
 	for (i=0;i<mat->rows;i++){
 	
 	for (j=0;j<mat->cols;j++){
-			ELEM(mat,i,j)=(rand()/(float)(RAND_MAX)) *2 -1;
+			ELEM(mat,i,j)=((float)rand()/(float)(RAND_MAX))*2-1;
 	}
 	}
 }
@@ -75,11 +78,9 @@ void mat_print(MAT *mat){
 	printf("\n");
 }
 
-
-
 float mat_permanent(MAT *mat){
-	int i,j,r;
-	float perm=0;
+	
+	float perm=0.0;
 
 	if (mat->cols==1 && mat->rows==1)
 		perm=ELEM(mat,0,0);
@@ -88,23 +89,28 @@ float mat_permanent(MAT *mat){
 		perm=ELEM(mat,0,0)*ELEM(mat,1,1)+ELEM(mat,0,1)*ELEM(mat,1,0);	
 	
 	else{
-		for (r=0;r<mat->cols;r++){    //posuvanie po stlpcoch
+		int i,j,r,index=0;
+		
+		for (r=0;r<mat->cols;r++){ 
 			MAT *mensiaMat;
 			mensiaMat= mat_create_with_type(mat->rows-1,mat->cols-1);
+			index=0;
 			
-			for (i=0;i<mat->cols;i++){
+			for (i=1;i<mat->rows;i++){
 	
-			for (j=0;j<mat->rows;j++){
+			for (j=0;j<mat->cols;j++){
 				if (j!=r){
-					ELEM(mensiaMat,i,j)=ELEM(mat,i+1,j+1);
+					mensiaMat->elem[index]=mat->elem[i * mat->rows + j];
+					index++;
 				}
 			}
 			}
+		printf("Matica %d:\n", r + 1);
 		mat_print(mensiaMat);
 	
 	
-	perm+=ELEM(mat,0,r)*mat_permanent(mensiaMat);
-	mat_destroy(mensiaMat);
+		perm+=ELEM(mat,0,r) * mat_permanent(mensiaMat);
+		mat_destroy(mensiaMat);
 		}
 	}
 	return perm;

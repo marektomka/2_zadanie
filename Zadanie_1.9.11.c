@@ -85,10 +85,12 @@ float mat_permanent(MAT *mat){
 	if (mat->cols==1 && mat->rows==1)
 		perm=ELEM(mat,0,0);
 	else
+	
 	if (mat->cols==2 && mat->rows==2)
 		perm=ELEM(mat,0,0)*ELEM(mat,1,1)+ELEM(mat,0,1)*ELEM(mat,1,0);	
 	
 	else{
+		
 		int i,j,r,index=0;
 		
 		for (r=0;r<mat->cols;r++){ 
@@ -105,9 +107,6 @@ float mat_permanent(MAT *mat){
 				}
 			}
 			}
-		printf("Matica %d:\n", r + 1);
-		mat_print(mensiaMat);
-	
 	
 		perm+=ELEM(mat,0,r) * mat_permanent(mensiaMat);
 		mat_destroy(mensiaMat);

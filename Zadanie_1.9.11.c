@@ -19,8 +19,11 @@ MAT* mat_create_with_type(unsigned int rows, unsigned int cols){
 	m->cols=cols;	                             
 	m->elem=(float*)malloc(sizeof(float)*rows*cols);
 		
-	if (m->elem == NULL)
-		return NULL;    
+	if (m->elem == NULL){
+		free(m);
+		return NULL;
+	}
+		  
 		      
 	return m;
 }

@@ -37,10 +37,10 @@ void mat_destroy(MAT *mat){
 void mat_random(MAT *mat){
 	int i,j;
 	for (i=0;i<mat->rows;i++){
-	
-	for (j=0;j<mat->cols;j++){
+		
+		for (j=0;j<mat->cols;j++){
 			ELEM(mat,i,j)=((float)rand()/(float)(RAND_MAX))*2-1;
-	}
+		}
 	}
 }
 
@@ -48,13 +48,14 @@ void mat_unit(MAT *mat){
 	int i,j;
 	for (i=0;i<mat->rows;i++){
 	
-	for (j=0;j<mat->cols;j++){
+		for (j=0;j<mat->cols;j++){
 	
-	if (i==j)
-		ELEM(mat,i,j)=1;
-	else
-		ELEM(mat,i,j)=0;
-	}
+			if (i==j)
+			ELEM(mat,i,j)=1;
+			
+			else
+			ELEM(mat,i,j)=0;
+		}
 	}
 }
 
@@ -63,20 +64,20 @@ void mat_print(MAT *mat){
 	
 	for (i=0;i<mat->rows;i++){
 	
-	for (j=0;j<mat->cols;j++){
+		for (j=0;j<mat->cols;j++){
 			if (ELEM(mat,i,j)-(int)(ELEM(mat,i,j))==0){
 				printf(" ");
 				printf("%d ",(int)(ELEM(mat,i,j)));
 			}
 			else{
 					
-			if (ELEM(mat,i,j)<0)
-				printf("%.3f ",ELEM(mat,i,j));	
-			else
-				printf(" %.3f ",ELEM(mat,i,j));
+				if (ELEM(mat,i,j)<0)
+					printf("%.3f ",ELEM(mat,i,j));	
+				else
+					printf(" %.3f ",ELEM(mat,i,j));
 			}		
-	}
-			printf("\n");
+		}
+		printf("\n");
 	}
 	printf("\n");
 }
@@ -105,16 +106,14 @@ float mat_permanent(MAT *mat){
 			
 			for (i=1;i<mat->rows;i++){
 	
-			for (j=0;j<mat->cols;j++){
-				if (j!=r){
-					mensiaMat->elem[index]=mat->elem[i * mat->rows + j];
-					index++;
+				for (j=0;j<mat->cols;j++){
+					if (j!=r){
+						mensiaMat->elem[index]=mat->elem[i * mat->rows + j];
+						index++;
+					}
 				}
 			}
-			}
-			printf("Matica %d:\n", r + 1);
-			mat_print(mensiaMat);
-	
+			
 		perm+=ELEM(mat,0,r) * mat_permanent(mensiaMat);
 		mat_destroy(mensiaMat);
 		}

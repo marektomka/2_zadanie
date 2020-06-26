@@ -11,7 +11,8 @@ typedef struct{
 }MAT;
 
 MAT* mat_create_with_type(unsigned int rows, unsigned int cols){
-	MAT* m = (MAT*)malloc(sizeof(MAT)); 
+	MAT* m = (MAT*)malloc(sizeof(MAT));
+
 	if (m == NULL)
 		return NULL;
 	
@@ -32,11 +33,11 @@ MAT* mat_create_with_type(unsigned int rows, unsigned int cols){
 void mat_destroy(MAT *mat){
 	free(mat->elem);
 	free(mat);
-	
 }
 
 void mat_random(MAT *mat){
 	int i,j;
+
 	for (i = 0; i < mat->rows; i++)
 	{
 		
@@ -49,9 +50,8 @@ void mat_random(MAT *mat){
 
 void mat_unit(MAT *mat){
 	int i,j;
+
 	for (i = 0; i < mat->rows; i++)
-	{
-	
 		for (j = 0; j < mat->cols; j++)
 		{
 	
@@ -61,7 +61,6 @@ void mat_unit(MAT *mat){
 			else
 			ELEM(mat,i,j) = 0;
 		}
-	}
 }
 
 void mat_print(MAT *mat){
@@ -69,7 +68,6 @@ void mat_print(MAT *mat){
 	
 	for (i = 0;i < mat->rows; i++)
 	{
-	
 		for (j = 0; j < mat->cols; j++)
 		{
 			if (ELEM(mat,i,j) - (int)(ELEM(mat,i,j)) == 0)
@@ -140,6 +138,7 @@ main(){
 	MAT* m;
 	unsigned int x,y;
 	float a;
+
 	printf("Zadaj pocet riadkov a pocet stlpcov:");
 	scanf("%d %d",&x,&y);
 	m = mat_create_with_type(x,y);

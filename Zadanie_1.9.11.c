@@ -94,6 +94,7 @@ void mat_print(MAT *mat){
 float mat_permanent(MAT *mat){
 	int i,j,r,index = 0, z = 0;
 	float perm = 0.0;
+	MAT *mensiaMat;
 	
 	if (mat->cols == 1 && mat->rows == 1)
 	{
@@ -109,7 +110,6 @@ float mat_permanent(MAT *mat){
 	
 	for (r = 0; r < mat->cols; r++)
 	{ 
-		MAT *mensiaMat;
 		mensiaMat = mat_create_with_type(mat->rows - 1, mat->cols - 1);
 			
 		for (i = 1; i < mat->rows; i++)
